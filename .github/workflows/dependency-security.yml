@@ -1,0 +1,50 @@
+name: Dependency Security Scan
+
+on:
+  push:
+    paths:
+      - '**/*.csproj'
+      - '**/packages.lock.json'
+      - 'SecurePasswordManager.slnx'
+      - '.github/workflows/dependency-security.yml'
+  pull_request:
+    paths:
+      - '**/*.csproj'
+      - '**/packages.lock.json'
+      - 'SecurePasswordManager.slnx'
+      - '.github/workflows/dependency-security.yml'
+  schedule:
+    - cron: '0 5 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  nuget-vulnerability-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore SecurePasswordManager.slnx
+
+      - name: Scan NuGet Vulnerabilities (Direct + Transitive)
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUTPUT=$(dotnet list SecurePasswordManager.slnx package --vulnerable --include-transitive)
+          echo "$OUTPUT"
+
+          if echo "$OUTPUT" | grep -Eiq "has the following vulnerable packages|vulnerable package"; then
+            echo "Security gate failed: vulnerable NuGet package(s) detected."
+            exit 1
+          fi
+
+          echo "Security gate passed: no known vulnerable NuGet packages found."

@@ -1,0 +1,86 @@
+# =========================
+# Build outputs
+# =========================
+[Bb]in/
+[Oo]bj/
+out/
+artifacts/
+
+# =========================
+# .NET user-specific files
+# =========================
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# =========================
+# IDE/editor folders
+# =========================
+.vs/
+.vscode/
+.idea/
+
+# =========================
+# NuGet
+# =========================
+*.nupkg
+*.snupkg
+packages/
+!**/packages/build/
+
+# =========================
+# Logs and diagnostics
+# =========================
+*.log
+*.tlog
+*.tmp
+*.temp
+*.cache
+*.pid
+*.svclog
+
+# =========================
+# Test results and coverage
+# =========================
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+coverage/
+coverage-report/
+
+# =========================
+# ReSharper / Rider
+# =========================
+_ReSharper*/
+*.DotSettings.user
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# =========================
+# Local secrets / env files
+# =========================
+.env
+.env.*
+secrets.json
+
+# =========================
+# Local databases and vaults
+# (keep example files if needed)
+# =========================
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# Keep migration/example DBs if explicitly added under docs/examples
+#!docs/**/*.db
+#!examples/**/*.db
